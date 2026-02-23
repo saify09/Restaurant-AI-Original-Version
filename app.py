@@ -1,7 +1,7 @@
-import gradio as gr
-import pandas as pd
-import json
+import os
 import time
+print(f"--- ATTEMPTING STARTUP: V1.0.4 - {time.ctime()} ---")
+
 from src.agents.manager_agent import create_manager_agent
 
 # Initialize Backend
