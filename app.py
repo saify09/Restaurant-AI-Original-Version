@@ -1,11 +1,14 @@
-import os
+import sys
 import time
+print(f"--- STARTUP TRACE: V1.0.6 - {time.ctime()} ---", flush=True)
+
+print("Loading core libraries...", flush=True)
+import os
 import gradio as gr
 import pandas as pd
 import json
 
-print(f"--- ATTEMPTING STARTUP: V1.0.5 - {time.ctime()} ---")
-
+print("Initializing agent components...", flush=True)
 from src.agents.manager_agent import create_manager_agent
 
 # Initialize Backend
@@ -14,10 +17,12 @@ import os
 
 # Check if RAG index exists in the correct path
 if not os.path.exists("data/vectors/faiss.index"):
-    print("Building RAG Index for the first time...")
+    print("Building RAG Index for the first time...", flush=True)
     init_rag()
 
+print("Creating agents and pipelines...", flush=True)
 manager, state_manager, rag_pipeline = create_manager_agent()
+print("Backend Ready.", flush=True)
 
 def chatbot_response(message, history):
     if not message:
