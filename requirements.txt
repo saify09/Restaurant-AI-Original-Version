@@ -1,4 +1,3 @@
-flask
 gradio
 smolagents
 sentence-transformers
@@ -7,6 +6,5 @@ pandas
 numpy
 markdown
 python-dotenv
-shitpost-generator
-torch
+torch --index-url https://download.pytorch.org/whl/cpu
 transformers
