@@ -5,7 +5,7 @@ from src.utils.rag_pipeline import RAGPipeline
 
 def create_menu_agent(rag_pipeline: RAGPipeline):
     token = os.getenv("HF_TOKEN")
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct", token=token)
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-1.5B-Instruct", token=token)
     
     tools = [
         MenuLookupTool(rag_pipeline)

@@ -31,13 +31,15 @@ def create_manager_agent():
         1. YOU ARE THE MANAGER. DO NOT perform specialized tasks yourself. 
         2. ALWAYS USE THE AGENTS: compliance_agent, transaction_agent, menu_agent.
         3. ERROR FIX: Do NOT call 'menu_lookup' directly. It belongs to menu_agent. Use menu_agent(task='lookup items').
-        4. CRITICAL: Do NOT use forbidden functions like locals(), globals(), or any internal python guts.
-        5. To call an agent, use: agent_name(task="specific request").
-        6. ALWAYS call compliance_agent(task="...") before transaction_agent for refunds/cancellations.
-        7. Use audit_log tool ONLY for final decisions (action, reasoning, risk).
-        8. To finish, use final_answer("your response").
+        4. CRITICAL: NEVER use 'import requests', 'BeautifulSoup', or 'locals()'. You have NO internet access.
+        5. If an agent fails, tell the user you are having technical difficulties.
+        6. To call an agent, use: agent_name(task="specific request").
+        7. ALWAYS call compliance_agent(task="...") before transaction_agent for refunds/cancellations.
+        8. Use audit_log tool ONLY for final decisions (action, reasoning, risk).
+        9. To finish, use final_answer("your response").
         """,
-        max_steps=12
+        max_steps=12,
+        additional_authorized_imports=['pd', 'json', 'time', 'datetime']
     )
     
     return manager, state_manager, rag_pipeline

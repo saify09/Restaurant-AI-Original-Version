@@ -1,11 +1,12 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.0.8 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.0 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
 import gradio as gr
 print(f"Gradio Version: {gr.__version__}", flush=True)
+print(f"HF_TOKEN detected: {os.getenv('HF_TOKEN') is not None}", flush=True)
 import pandas as pd
 import json
 
@@ -30,7 +31,10 @@ def chatbot_response(message, history):
         return "", history
     
     user_id = "USR-001"
-    response = manager.run(f"User {user_id}: {message}")
+    try:
+        response = manager.run(f"User {user_id}: {message}")
+    except Exception as e:
+        response = f"AI Error: {str(e)}"
     
     state_manager.log_audit({
         "user_id": user_id,
@@ -40,17 +44,9 @@ def chatbot_response(message, history):
     
     if history is None: history = []
     
-    # Detect Gradio version or history format to decide between tuples and dicts
-    use_messages = gr.__version__.startswith("5") or gr.__version__.startswith("6")
-    if not use_messages and len(history) > 0 and isinstance(history[0], dict):
-        use_messages = True
-        
-    if use_messages:
-        history.append({"role": "user", "content": message})
-        history.append({"role": "assistant", "content": str(response)})
-    else:
-        # Fallback to tuples for older Gradio
-        history.append((message, str(response)))
+    # Gradio 6 format requirement: messages list
+    history.append({"role": "user", "content": message})
+    history.append({"role": "assistant", "content": str(response)})
         
     return "", history
 
@@ -101,7 +97,7 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500)
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500, type="messages")
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
                     
                     # Submit via Enter
