@@ -15,19 +15,19 @@ if not os.path.exists("faiss_index"):
 manager, state_manager, rag_pipeline = create_manager_agent()
 
 def chatbot_response(message, history):
-    # smolagents history handling is internal usually, 
-    # but for manual state we can append context.
     user_id = "USR-001"
     response = manager.run(f"User {user_id}: {message}")
     
-    # Log the interaction for audit
     state_manager.log_audit({
         "user_id": user_id,
         "input": message,
         "response": str(response)
     })
     
-    return str(response)
+    if history is None: history = []
+    history.append({"role": "user", "content": message})
+    history.append({"role": "assistant", "content": str(response)})
+    return history
 
 def get_restaurant_stats():
     orders = state_manager.get_all_orders()
@@ -76,16 +76,16 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.ChatInterface(
-                        chatbot_response,
-                        fill_height=True,
-                    )
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", type="messages", height=500)
+                    msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
+                    msg_input.submit(chatbot_response, [msg_input, chatbot], [chatbot])
+                    msg_input.submit(lambda: "", None, [msg_input]) # Clear input
                 with gr.Column(scale=1):
                     balance_display = gr.Markdown(get_user_balance_display())
                     gr.Markdown("#### Rapid Actions")
-                    gr.Button("Browse Menu").click(lambda: "What is on the menu?", outputs=chatbot.chatbot)
-                    gr.Button("Check Order Status").click(lambda: "What is the status of my latest order?", outputs=chatbot.chatbot)
-                    gr.Button("Request Refund").click(lambda: "I want a refund for my last order.", outputs=chatbot.chatbot)
+                    gr.Button("Browse Menu").click(lambda: "What is on the menu?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
+                    gr.Button("Check Order Status").click(lambda: "What is the status of my latest order?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
+                    gr.Button("Request Refund").click(lambda: "I want a refund for my last order.", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
 
         # 2. Restaurant Tab
         with gr.Tab("🍳 Restaurant Dashboard"):
