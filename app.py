@@ -8,7 +8,8 @@ from src.agents.manager_agent import create_manager_agent
 from init_rag import init_rag
 import os
 
-if not os.path.exists("faiss_index"):
+# Check if RAG index exists in the correct path
+if not os.path.exists("data/vectors/faiss.index"):
     print("Building RAG Index for the first time...")
     init_rag()
 
@@ -132,4 +133,4 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch(theme=theme)
+    demo.launch(theme=theme, server_name="0.0.0.0")
