@@ -1,8 +1,8 @@
 ---
 title: Restaurant AI Gradio Version
 emoji: 🍊
-colorFrom: orange
-colorTo: yellow
+colorFrom: yellow
+colorTo: green
 sdk: gradio
 sdk_version: "4.0.0"
 python_version: "3.10"
