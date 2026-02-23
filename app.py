@@ -133,4 +133,4 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch(theme=theme, server_name="0.0.0.0")
+    demo.launch(theme=theme, server_name="0.0.0.0", ssr_mode=False)
