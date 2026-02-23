@@ -1,4 +1,4 @@
-gradio
+gradio<6.0.0
 smolagents
 sentence-transformers
 faiss-cpu

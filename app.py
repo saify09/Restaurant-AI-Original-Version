@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.1 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.2 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
@@ -97,7 +97,7 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500, type="messages")
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500)
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
                     
                     # Submit via Enter
