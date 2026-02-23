@@ -1,6 +1,7 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.9 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.2.0 - {time.ctime()} ---", flush=True)
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 print("Loading core libraries...", flush=True)
 import os
@@ -32,7 +33,7 @@ def chatbot_response(message, history):
     
     user_id = "USR-001"
     try:
-        response = manager.run(f"User {user_id}: {message}")
+        response = manager.run(f"User ID: '{user_id}'. Process this request: {message}")
     except Exception as e:
         response = f"AI Error: {str(e)}"
     

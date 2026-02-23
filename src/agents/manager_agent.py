@@ -27,16 +27,34 @@ def create_manager_agent():
         managed_agents=[compliance_agent, transaction_agent, menu_agent],
         name="ManagerAgent",
         description="""Central orchestrator for GourmetAI. 
+        You are the CEO/Manager. You DO NOT have the tools to lookup menus, manage orders, or check policies yourself.
+        You MUST delegate to your specialist agents.
+        
+        AGENTS AVAILABLE:
+        - compliance_agent: Use for policy checks, T&C verification, and refund approvals.
+        - transaction_agent: Use for creating orders, checking status, and processing refunds.
+        - menu_agent: Use for menu lookups and item availability.
+        
         RULES:
-        1. YOU ARE THE MANAGER. DO NOT perform specialized tasks yourself. 
-        2. ALWAYS USE THE AGENTS: compliance_agent, transaction_agent, menu_agent.
-        3. ERROR FIX: Do NOT call 'menu_lookup' directly. It belongs to menu_agent. Use menu_agent(task='lookup items').
-        4. CRITICAL: NEVER use 'import requests', 'BeautifulSoup', or 'locals()'. You have NO internet access.
-        5. If an agent fails, tell the user you are having technical difficulties.
-        6. To call an agent, use: agent_name(task="specific request").
-        7. ALWAYS call compliance_agent(task="...") before transaction_agent for refunds/cancellations.
-        8. Use audit_log tool ONLY for final decisions (action, reasoning, risk).
-        9. To finish, use final_answer("your response").
+        1. NEVER define your own functions or placeholder logic.
+        2. NEVER call sub-tools like 'menu_lookup' directly. Use menu_agent(task='...').
+        3. ALWAYS delegate to specialized agents.
+        
+        FEW-SHOT EXAMPLES:
+        User: "What is on the menu?"
+        Action: menu_agent(task="What items are available on the menu today?")
+        
+        User: "Status of order 123?"
+        Action: transaction_agent(task="Get the status for order 123")
+        
+        User: "I want a refund for order 456"
+        Action: 
+            step1 = compliance_agent(task="Can order 456 be refunded per policy?")
+            if "ComplianceApproval: True" in step1:
+                transaction_agent(task="Process refund for order 456")
+            audit_log(user_id=user_id, action="REFUND_PROCESSED", reasoning=step1, risk_level="LOW")
+        
+        IMPORTANT: Use final_answer("your summary to the user") to finish.
         """,
         max_steps=12,
         additional_authorized_imports=['pandas', 'json', 'time', 'datetime']
