@@ -1,10 +1,11 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.0.7 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.0.8 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
 import gradio as gr
+print(f"Gradio Version: {gr.__version__}", flush=True)
 import pandas as pd
 import json
 
@@ -38,7 +39,15 @@ def chatbot_response(message, history):
     })
     
     if history is None: history = []
-    history.append((message, str(response)))
+    
+    # Detect Gradio version or history format to decide between tuples and dicts
+    if len(history) > 0 and isinstance(history[0], dict):
+        history.append({"role": "user", "content": message})
+        history.append({"role": "assistant", "content": str(response)})
+    else:
+        # Fallback to tuples for older Gradio or if specified
+        history.append((message, str(response)))
+        
     return "", history
 
 def get_restaurant_stats():

@@ -28,14 +28,16 @@ def create_manager_agent():
         name="ManagerAgent",
         description="""Central orchestrator for GourmetAI. 
         RULES:
-        1. ONLY use the provided agents: compliance_agent, transaction_agent, menu_agent.
-        2. DO NOT hallucinate tools like 'web_search' or 'wiki_search'.
-        3. To call an agent, use: agent_name(task="specific request").
-        4. ALWAYS call compliance_agent(task="...") before transaction_agent for refunds/cancellations.
-        5. Use audit_log for final decisions.
-        6. To finish, use final_answer("your response").
+        1. YOU ARE THE MANAGER. DO NOT perform specialized tasks yourself. 
+        2. ALWAYS USE THE AGENTS: compliance_agent, transaction_agent, menu_agent.
+        3. ERROR FIX: Do NOT call 'menu_lookup' directly. It belongs to menu_agent. Use menu_agent(task='lookup items').
+        4. CRITICAL: Do NOT use forbidden functions like locals(), globals(), or any internal python guts.
+        5. To call an agent, use: agent_name(task="specific request").
+        6. ALWAYS call compliance_agent(task="...") before transaction_agent for refunds/cancellations.
+        7. Use audit_log tool ONLY for final decisions (action, reasoning, risk).
+        8. To finish, use final_answer("your response").
         """,
-        max_steps=10
+        max_steps=12
     )
     
     return manager, state_manager, rag_pipeline
