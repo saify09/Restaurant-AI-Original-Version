@@ -1,0 +1,54 @@
+[
+    {
+        "source": "terms_and_conditions.md",
+        "content": "# Terms and Conditions"
+    },
+    {
+        "source": "terms_and_conditions.md",
+        "content": "1. Refund Eligibility\n- Refunds are only eligible if requested within 10 minutes of order placement.\n- No refunds for orders already in \"PREPARING\" or \"COMPLETED\" status.\n- Technical failures in the app are eligible for full refund regardless of time."
+    },
+    {
+        "source": "terms_and_conditions.md",
+        "content": "2. Cancellation Policy\n- Orders can be cancelled for free within 5 minutes.\n- After 5 minutes, a 50% cancellation fee applies if the order is not yet \"PREPARING\".\n- Once \"PREPARING\", cancellation is not allowed."
+    },
+    {
+        "source": "terms_and_conditions.md",
+        "content": "3. Pricing\n- Prices are subject to change without notice.\n- If a price mismatch occurs between menu and checkout, the lower price will be honored."
+    },
+    {
+        "source": "terms_and_conditions.md",
+        "content": "4. Data Usage\n- User data is used strictly for order fulfillment and platform improvement."
+    },
+    {
+        "source": "privacy_policy.md",
+        "content": "# Privacy Policy"
+    },
+    {
+        "source": "privacy_policy.md",
+        "content": "1. Information We Collect\n- Name, contact details, and order history.\n- Wallet balance and transaction history."
+    },
+    {
+        "source": "privacy_policy.md",
+        "content": "2. How We Use Data\n- To process orders and provide customer support.\n- To improve our AI agent's performance through anonymized reasoning logs."
+    },
+    {
+        "source": "privacy_policy.md",
+        "content": "3. Third Parties\n- We do not share data with third parties except for payment processing (simulated)."
+    },
+    {
+        "source": "privacy_policy.md",
+        "content": "4. Safety\n- All AI decisions are logged for auditability and risk management."
+    },
+    {
+        "source": "menu.md",
+        "content": "# Restaurant Menu"
+    },
+    {
+        "source": "menu.md",
+        "content": "| Item | Price | Description |\n| :--- | :--- | :--- |\n| Burger | 12.00 | Juicy beef burger with cheese |\n| Pizza | 15.00 | Margherita pizza with fresh basil |\n| Pasta | 13.00 | Creamy alfredo pasta with mushrooms |\n| Coke | 2.50 | 330ml chilled beverage |\n| Salad | 8.00 | Fresh garden salad with vinaigrette |"
+    },
+    {
+        "source": "menu.md",
+        "content": "**Note**: All prices are in USD."
+    }
+]
