@@ -39,7 +39,7 @@ def create_manager_agent():
         9. To finish, use final_answer("your response").
         """,
         max_steps=12,
-        additional_authorized_imports=['pd', 'json', 'time', 'datetime']
+        additional_authorized_imports=['pandas', 'json', 'time', 'datetime']
     )
     
     return manager, state_manager, rag_pipeline

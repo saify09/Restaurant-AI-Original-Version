@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.0 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.1 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
