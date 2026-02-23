@@ -1,9 +1,11 @@
+import os
 from smolagents import CodeAgent, InferenceClientModel
 from src.tools.transaction_tools import CreateOrderTool, GetOrderStatusTool, RefundRequestTool
 from src.utils.state_manager import StateManager
 
 def create_transaction_agent(state_manager: StateManager):
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct")
+    token = os.getenv("HF_TOKEN")
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct", token=token)
     
     tools = [
         CreateOrderTool(state_manager),

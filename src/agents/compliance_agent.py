@@ -1,9 +1,11 @@
+import os
 from smolagents import CodeAgent, InferenceClientModel
 from src.tools.compliance_tools import PolicyLookupTool, VerifyComplianceTool
 from src.utils.rag_pipeline import RAGPipeline
 
 def create_compliance_agent(rag_pipeline: RAGPipeline):
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct")
+    token = os.getenv("HF_TOKEN")
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct", token=token)
     
     tools = [
         PolicyLookupTool(rag_pipeline),

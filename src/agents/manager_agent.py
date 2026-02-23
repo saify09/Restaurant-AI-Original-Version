@@ -1,3 +1,4 @@
+import os
 from smolagents import CodeAgent, InferenceClientModel
 from src.agents.compliance_agent import create_compliance_agent
 from src.agents.transaction_agent import create_transaction_agent
@@ -17,7 +18,8 @@ def create_manager_agent():
     menu_agent = create_menu_agent(rag_pipeline)
     
     # Top-level Orchestrator
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-1.5B-Instruct") 
+    token = os.getenv("HF_TOKEN")
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-1.5B-Instruct", token=token) 
     
     manager = CodeAgent(
         tools=[AuditTool(state_manager)],

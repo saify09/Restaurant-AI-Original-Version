@@ -1,9 +1,11 @@
+import os
 from smolagents import CodeAgent, InferenceClientModel
 from src.tools.menu_tools import MenuLookupTool
 from src.utils.rag_pipeline import RAGPipeline
 
 def create_menu_agent(rag_pipeline: RAGPipeline):
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct")
+    token = os.getenv("HF_TOKEN")
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-0.5B-Instruct", token=token)
     
     tools = [
         MenuLookupTool(rag_pipeline)
