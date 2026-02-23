@@ -1,7 +1,7 @@
 import os
 import time
 import sys
-print(f"--- STARTUP TRACE: V1.2.3 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.2.4 - {time.ctime()} ---", flush=True)
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 print("Loading core libraries...", flush=True)

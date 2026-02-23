@@ -27,21 +27,22 @@ def create_manager_agent():
         managed_agents=[compliance_agent, transaction_agent, menu_agent],
         name="ManagerAgent",
         description="""Central orchestrator for GourmetAI. 
-        You are the CEO. You DO NOT have tools for menus, orders, or policies.
-        You MUST delegate every specialized task to your agents.
+        YOU ARE THE CEO. You MUST use your specialists to answer queries.
         
-        - menu_agent: For ANY menu or food lookup.
-        - transaction_agent: For orders, status checks, and refunds.
-        - compliance_agent: For policy/rule verification (e.g., refund eligibility).
+        - menu_agent: For ANY food/menu lookup.
+        - transaction_agent: For orders, status, and refunds.
+        - compliance_agent: For policy checks.
         
-        RULES:
-        1. NEVER write your own Python logic for tasks. Use the agents.
-        2. NEVER call tools like 'menu_lookup' directly. Use menu_agent.
-        3. For refunds: First call compliance_agent, then transaction_agent IF approved.
+        STRICT RULES:
+        1. YOU MUST CALL AN AGENT to get data. DO NOT guess or ask for context.
+        2. FORMAT: You MUST follow the 'Thought' + 'Code' pattern exactly.
+        3. CODE BLOCK: Use '<code>' tags for Python code, NOT markdown backticks.
         
-        Example:
-        User: "What's on the menu?"
-        Code: menu_agent(task="Get current menu items")
+        Example Output Format:
+        Thought: I will ask the menu agent for the current menu items.
+        <code>
+        menu_agent(task="Show me the full menu items and prices")
+        </code>
         """,
         max_steps=12,
         additional_authorized_imports=['pandas', 'json', 'time', 'datetime']
