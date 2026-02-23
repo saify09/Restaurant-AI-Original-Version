@@ -124,7 +124,7 @@ def build_menu_html() -> str:
 
 
 def customer_chat(message: str, history: list, username: str) -> str:
-    user = username.strip().lower() or "customer"
+    user = username.strip().lower() if username else "customer"
     if user not in redis_db.get("users", None) if False else redis_db.store["users"]:
         # Auto-create unknown users with $50 balance
         redis_db.store["users"][user] = {"balance": 50.0, "role": "Customer"}
@@ -132,7 +132,7 @@ def customer_chat(message: str, history: list, username: str) -> str:
 
 
 def refresh_customer(username: str) -> dict:
-    user = username.strip().lower() or "customer"
+    user = username.strip().lower() if username else "customer"
     return dashboards.customer_view(user)
 
 
