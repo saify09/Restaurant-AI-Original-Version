@@ -1,3 +1,15 @@
+---
+title: Restaurant AI Gradio Version
+emoji: 🍊
+colorFrom: orange
+colorTo: yellow
+sdk: gradio
+sdk_version: "4.0.0"
+python_version: "3.10"
+app_file: app.py
+pinned: false
+---
+
 # 🍊 Autonomous Restaurant AI Platform
 
 **100% free. No paid APIs. Runs on Hugging Face Spaces free CPU tier.**
