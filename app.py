@@ -78,14 +78,16 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
                 with gr.Column(scale=3):
                     chatbot = gr.Chatbot(label="GourmetAI Assistant", type="messages", height=500)
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
-                    msg_input.submit(chatbot_response, [msg_input, chatbot], [chatbot])
-                    msg_input.submit(lambda: "", None, [msg_input]) # Clear input
+                    
+                    # Submit via Enter
+                    msg_input.submit(chatbot_response, [msg_input, chatbot], [msg_input, chatbot])
+                    
                 with gr.Column(scale=1):
                     balance_display = gr.Markdown(get_user_balance_display())
                     gr.Markdown("#### Rapid Actions")
-                    gr.Button("Browse Menu").click(lambda: "What is on the menu?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
-                    gr.Button("Check Order Status").click(lambda: "What is the status of my latest order?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
-                    gr.Button("Request Refund").click(lambda: "I want a refund for my last order.", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [chatbot]).then(lambda: "", None, [msg_input])
+                    gr.Button("Browse Menu").click(lambda: "What is on the menu?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [msg_input, chatbot])
+                    gr.Button("Check Order Status").click(lambda: "What is the status of my latest order?", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [msg_input, chatbot])
+                    gr.Button("Request Refund").click(lambda: "I want a refund for my last order.", outputs=msg_input).then(chatbot_response, [msg_input, chatbot], [msg_input, chatbot])
 
         # 2. Restaurant Tab
         with gr.Tab("🍳 Restaurant Dashboard"):
@@ -130,4 +132,4 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(theme=theme)
