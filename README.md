@@ -1,3 +1,14 @@
+---
+title: GourmetAI
+emoji: 🍽️
+colorFrom: yellow
+colorTo: red
+sdk: gradio
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # 🍽️ GourmetAI: Autonomous Restaurant Platform
 
 GourmetAI is a production-grade, multi-agent SaaS platform designed for autonomous restaurant operations. Built with `smolagents` and optimized for Hugging Face Free Tier, it features policy-governed orchestration, RAG-based compliance, and an enterprise-level audit trail.
