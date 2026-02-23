@@ -19,7 +19,7 @@ def create_manager_agent():
     
     # Top-level Orchestrator
     token = os.getenv("HF_TOKEN")
-    model = InferenceClientModel(model_id="Qwen/Qwen2.5-1.5B-Instruct", token=token) 
+    model = InferenceClientModel(model_id="Qwen/Qwen2.5-7B-Instruct", token=token) 
     
     manager = CodeAgent(
         tools=[AuditTool(state_manager)],
@@ -27,34 +27,21 @@ def create_manager_agent():
         managed_agents=[compliance_agent, transaction_agent, menu_agent],
         name="ManagerAgent",
         description="""Central orchestrator for GourmetAI. 
-        You are the CEO/Manager. You DO NOT have the tools to lookup menus, manage orders, or check policies yourself.
-        You MUST delegate to your specialist agents.
+        You are the CEO. You DO NOT have tools for menus, orders, or policies.
+        You MUST delegate every specialized task to your agents.
         
-        AGENTS AVAILABLE:
-        - compliance_agent: Use for policy checks, T&C verification, and refund approvals.
-        - transaction_agent: Use for creating orders, checking status, and processing refunds.
-        - menu_agent: Use for menu lookups and item availability.
+        - menu_agent: For ANY menu or food lookup.
+        - transaction_agent: For orders, status checks, and refunds.
+        - compliance_agent: For policy/rule verification (e.g., refund eligibility).
         
         RULES:
-        1. NEVER define your own functions or placeholder logic.
-        2. NEVER call sub-tools like 'menu_lookup' directly. Use menu_agent(task='...').
-        3. ALWAYS delegate to specialized agents.
+        1. NEVER write your own Python logic for tasks. Use the agents.
+        2. NEVER call tools like 'menu_lookup' directly. Use menu_agent.
+        3. For refunds: First call compliance_agent, then transaction_agent IF approved.
         
-        FEW-SHOT EXAMPLES:
-        User: "What is on the menu?"
-        Action: menu_agent(task="What items are available on the menu today?")
-        
-        User: "Status of order 123?"
-        Action: transaction_agent(task="Get the status for order 123")
-        
-        User: "I want a refund for order 456"
-        Action: 
-            step1 = compliance_agent(task="Can order 456 be refunded per policy?")
-            if "ComplianceApproval: True" in step1:
-                transaction_agent(task="Process refund for order 456")
-            audit_log(user_id=user_id, action="REFUND_PROCESSED", reasoning=step1, risk_level="LOW")
-        
-        IMPORTANT: Use final_answer("your summary to the user") to finish.
+        Example:
+        User: "What's on the menu?"
+        Code: menu_agent(task="Get current menu items")
         """,
         max_steps=12,
         additional_authorized_imports=['pandas', 'json', 'time', 'datetime']

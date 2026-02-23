@@ -16,7 +16,7 @@ def create_compliance_agent(rag_pipeline: RAGPipeline):
         tools=tools,
         model=model,
         name="ComplianceAgent",
-        description="Policy expert. RULES: 1. ONLY use policy_lookup or verify_compliance. 2. Return 'ComplianceApproval: True' or 'False'. 3. DO NOT hallucinate tools. 4. Use final_answer() to finish.",
+        description="Policy expert. Verifies if requests like refunds or cancellations comply with restaurant rules.",
         max_steps=5
     )
     

@@ -15,7 +15,7 @@ def create_menu_agent(rag_pipeline: RAGPipeline):
         tools=tools,
         model=model,
         name="MenuAgent",
-        description="Menu expert. RULES: 1. ONLY use menu_lookup. 2. DO NOT hallucinate web tools. 3. Use final_answer() to finish.",
+        description="Restaurant menu expert. Can lookup food items, prices, and availability.",
         max_steps=5
     )
     

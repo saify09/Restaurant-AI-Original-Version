@@ -17,7 +17,7 @@ def create_transaction_agent(state_manager: StateManager):
         tools=tools,
         model=model,
         name="TransactionAgent",
-        description="Order manager. RULES: 1. ONLY use create_order, get_order_status, or request_refund. 2. NEVER refund without ComplianceApproval: True. 3. Use final_answer() to finish.",
+        description="Order manager. Can create orders, check status, and process refunds.",
         max_steps=5
     )
     
