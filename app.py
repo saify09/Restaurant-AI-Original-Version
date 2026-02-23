@@ -41,11 +41,15 @@ def chatbot_response(message, history):
     if history is None: history = []
     
     # Detect Gradio version or history format to decide between tuples and dicts
-    if len(history) > 0 and isinstance(history[0], dict):
+    use_messages = gr.__version__.startswith("5") or gr.__version__.startswith("6")
+    if not use_messages and len(history) > 0 and isinstance(history[0], dict):
+        use_messages = True
+        
+    if use_messages:
         history.append({"role": "user", "content": message})
         history.append({"role": "assistant", "content": str(response)})
     else:
-        # Fallback to tuples for older Gradio or if specified
+        # Fallback to tuples for older Gradio
         history.append((message, str(response)))
         
     return "", history
