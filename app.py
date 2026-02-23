@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.4 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.5 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
@@ -123,7 +123,7 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform", theme=theme) 
             refresh_btn = gr.Button("🔄 Refresh Kitchen Feed")
             refresh_btn.click(
                 refresh_dashboards, 
-                outputs=[balance_display, order_table, inventory_table, gr.State()] # State placeholder
+                outputs=[balance_display, order_table, inventory_table, audit_table]
             )
 
         # 3. Super Admin Tab
@@ -153,4 +153,4 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform", theme=theme) 
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0")
+    demo.launch(server_name="0.0.0.0", ssr=False)
