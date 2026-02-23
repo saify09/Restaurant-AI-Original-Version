@@ -1,9 +1,10 @@
 import os
-print(f"--- STARTUP TRACE: V1.2.1 - {time.ctime()} ---", flush=True)
+import time
+import sys
+print(f"--- STARTUP TRACE: V1.2.2 - {time.ctime()} ---", flush=True)
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 print("Loading core libraries...", flush=True)
-import sys
 import gradio as gr
 print(f"Gradio Version: {gr.__version__}", flush=True)
 print(f"HF_TOKEN detected: {os.getenv('HF_TOKEN') is not None}", flush=True)
