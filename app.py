@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.6 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.7 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
@@ -44,9 +44,8 @@ def chatbot_response(message, history):
     
     if history is None: history = []
     
-    # Gradio 6 format requirement: messages list
-    history.append({"role": "user", "content": message})
-    history.append({"role": "assistant", "content": str(response)})
+    # Reverting to tuple format for maximum compatibility with Gradio 5.x
+    history.append((message, str(response)))
         
     return "", history
 
@@ -66,7 +65,17 @@ def get_audit_logs():
     logs = state_manager.state.get("audit_logs", [])
     if not logs:
         return pd.DataFrame(columns=["timestamp", "user_id", "action", "details"])
-    return pd.DataFrame(logs).tail(20) # Show last 20 logs
+    
+    # Force a consistent schema to prevent gr.DataFrame errors
+    standardized_logs = []
+    for log in logs:
+        standardized_logs.append({
+            "timestamp": time.ctime(log.get("timestamp", time.time())),
+            "user_id": str(log.get("user_id", "Unknown")),
+            "action": str(log.get("action", log.get("input", "N/A"))),
+            "details": str(log.get("reasoning", log.get("response", "N/A")))
+        })
+    return pd.DataFrame(standardized_logs).tail(20)
 
 def get_user_balance_display():
     balance = state_manager.get_user_balance("USR-001")
@@ -97,7 +106,7 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform", theme=theme) 
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500, type="messages")
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500)
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
                     
                     # Submit via Enter
