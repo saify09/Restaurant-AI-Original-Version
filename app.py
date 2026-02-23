@@ -16,6 +16,9 @@ if not os.path.exists("data/vectors/faiss.index"):
 manager, state_manager, rag_pipeline = create_manager_agent()
 
 def chatbot_response(message, history):
+    if not message:
+        return "", history
+    
     user_id = "USR-001"
     response = manager.run(f"User {user_id}: {message}")
     
@@ -26,9 +29,8 @@ def chatbot_response(message, history):
     })
     
     if history is None: history = []
-    history.append({"role": "user", "content": message})
-    history.append({"role": "assistant", "content": str(response)})
-    return history
+    history.append((message, str(response)))
+    return "", history
 
 def get_restaurant_stats():
     orders = state_manager.get_all_orders()
@@ -67,7 +69,7 @@ theme = gr.themes.Soft(
     font=[gr.themes.GoogleFont("Inter"), "ui-sans-serif", "system-ui", "sans-serif"],
 )
 
-with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") as demo:
+with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
     gr.Markdown("# 🍽️ GourmetAI Platform")
     gr.Markdown("### *A Foodpanda-Level Autonomous AI SaaS*")
     
@@ -77,7 +79,7 @@ with gr.Blocks(theme=theme, title="GourmetAI - Autonomous Restaurant Platform") 
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.Chatbot(label="GourmetAI Assistant", type="messages", height=500)
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500)
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
                     
                     # Submit via Enter
