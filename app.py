@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.8 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.9 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
@@ -163,4 +163,4 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform", theme=theme) 
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0")
+    demo.launch(server_name="0.0.0.0", show_api=False)

@@ -8,3 +8,4 @@ markdown
 python-dotenv
 torch
 transformers
+pydantic<2.11.0
