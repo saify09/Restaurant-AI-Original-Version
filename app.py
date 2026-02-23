@@ -1,6 +1,6 @@
 import sys
 import time
-print(f"--- STARTUP TRACE: V1.1.3 - {time.ctime()} ---", flush=True)
+print(f"--- STARTUP TRACE: V1.1.4 - {time.ctime()} ---", flush=True)
 
 print("Loading core libraries...", flush=True)
 import os
@@ -87,7 +87,7 @@ theme = gr.themes.Soft(
     font=[gr.themes.GoogleFont("Inter"), "ui-sans-serif", "system-ui", "sans-serif"],
 )
 
-with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
+with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform", theme=theme) as demo:
     gr.Markdown("# 🍽️ GourmetAI Platform")
     gr.Markdown("### *A Foodpanda-Level Autonomous AI SaaS*")
     
@@ -97,7 +97,7 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
         with gr.Tab("📱 Customer App"):
             with gr.Row():
                 with gr.Column(scale=3):
-                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500)
+                    chatbot = gr.Chatbot(label="GourmetAI Assistant", height=500, type="messages")
                     msg_input = gr.Textbox(placeholder="Type your message here...", label="Your Message")
                     
                     # Submit via Enter
@@ -153,4 +153,4 @@ with gr.Blocks(title="GourmetAI - Autonomous Restaurant Platform") as demo:
     demo.load(refresh_dashboards, outputs=[balance_display, order_table, inventory_table, audit_table])
 
 if __name__ == "__main__":
-    demo.launch(theme=theme, server_name="0.0.0.0", ssr_mode=False)
+    demo.launch(server_name="0.0.0.0")
